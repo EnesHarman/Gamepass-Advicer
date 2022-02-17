@@ -36,4 +36,8 @@ public class Genre {
 	
 	@OneToMany(mappedBy = "genre", fetch = FetchType.LAZY)
 	List<Game> games;
+
+	public  Genre(int id){
+		this.genre_id = id;
+	}
 }

@@ -37,8 +37,7 @@ public class GameManager implements GameService{
 		
 		Pageable pageable = PageRequest.of(pageno-1, pagesize);
 		
-		return new SuccessDataResult<List<GameDto>>("Games listed.",this.gameDao.getGameList(pageable)); 
-		
+		return new SuccessDataResult<List<GameDto>>("Games listed.",this.gameDao.getGameList(pageable));
 	}
 	
 
@@ -55,6 +54,9 @@ public class GameManager implements GameService{
 			if(minMetaScore.isPresent() && minUserScore.isPresent()) {
 				List<GameDto> games = this.gameDao.getGamesByMetaScoreAndUserScore(minMetaScore.get(), minUserScore.get());
 				int index =(int) (Math.random() *games.size());
+				if(games.size()==0){
+					return new SuccessDataResult<GameDto>("Random game listed.",null);
+				}
 				return new SuccessDataResult<GameDto>("Random game listed.",games.get(index));
 			}
 			
@@ -92,6 +94,9 @@ public class GameManager implements GameService{
 		else {
 			List<Game> games = new ArrayList<Game>();
 			games = this.gameDao.getByGenre_GenreName(gameGenre.get());
+			if(games.size()==0){
+				return new SuccessDataResult<GameDto>("Random game listed.",null);
+			}
 			int index =(int) (Math.random() *games.size());
 			Game randomGame = games.get(index);
 			GameDto dto = new GameDto(

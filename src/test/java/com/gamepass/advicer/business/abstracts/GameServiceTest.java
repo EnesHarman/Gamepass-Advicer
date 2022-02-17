@@ -152,5 +152,12 @@ class GameServiceTest {
 
     @Test
     void deleteGame() {
+        //given
+        int gameId = 1;
+        //when
+        Result result =this.underTest.deleteGame(gameId);
+        //then
+        verify(gameDao).deleteById(any());
+        assertFalse(!result.getSuccess());
     }
 }
